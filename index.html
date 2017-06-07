@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Neighborhood Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/pizza.ico">
+</head>
+
+<body>
+    <header>
+        <img src="img/barstool_logo.png" class="logo" alt="Barstool Logo">
+        <div id="map-error" data-bind="visible: mapError" class="alert alert-danger">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p class="error-msg" data-bind="text: mapErrorMsg"></p>
+        </div>
+    </header>
+    
+    <aside id="side-nav">
+        <span class="side-nav-btn" onclick="openNav()">&#9776;</span>
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="btn btn-default" data-bind="click: setViewList.bind($data, '0', '3.333')">Poor</li>
+            <li role="presentation" class="btn btn-default" data-bind="click: setViewList.bind($data, '3.333', '6.67')">Average</li>
+            <li role="presentation" class="btn btn-default" data-bind="click: setViewList.bind($data, '6.67', '11')">Great</li>
+            <li role="presentation" class="btn btn-default" data-bind="click: setViewList.bind($data, '0', '11')">All</li>
+        </ul>
+
+        <ul class="location-list" data-bind="foreach: viewList">
+            <li class="location-name" data-bind="html: name, click: $root.getOtherInfo"></li>
+        </ul>
+    </aside>
+    
+    <main id="map"></main>
+    
+
+    <!-- Modal -->
+    <div class="modal fade" role="dialog" data-bind="modal: showModal, with: curLoc">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <button type="button" class="modal-close pull-right" data-dismiss="modal" onclick="stopVideo()">&times;</button>
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: name"></h4>
+                    <p class="address" data-bind="text: address"></p>
+                </div>
+                <div class="modal-body">
+                    <div id="tweet" data-bind="html: tweet"></div>
+                    <div class="ratings container-fluid">
+                        <div class="row">
+                            <p class="rating-name col-xs-6">El Presidente:</p>
+                            <p class="rating-score col-xs-6 text-right">
+                                <a data-bind="attr: { href: bsLink }, text: bsRating" target="_blank"></a>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p class="rating-name col-xs-6">Yelp:</p>
+                            <p class="rating-score col-xs-6 text-right">
+                                <a data-bind="attr: { href: yelpLink }, text: yelpRating" target="_blank"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer error" data-bind="visible: errorMsg, text: errorMsg">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
+    <script src="js/oauth.js"></script>
+    <script src="js/sha1.js"></script>
+    <script src="models/pizzaLocations.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1kuV61ZsbPnzUUXag_vaWKgyejz0FN4U&libraries=places&callback=MyApp.mapInit" async defer onerror="MyApp.flagMapError()"></script>
+    <script>
+        // side navbar open/close functions
+        function openNav() {
+            document.getElementById("side-nav").className = "show";
+        }
+
+        function closeNav() {
+            document.getElementById("side-nav").className = "";
+        }
+
+        //formats twitter response
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+        
+        function stopVideo() {
+            var x = document.getElementsByTagName("twitterwidget");
+            for (var i = 0; i < x.length; i++) {
+                x[i].parentNode.removeChild(x[i]);
+            };
+        };
+
+</script>
+    
+    </script>
+
+</body>
+
+</html>

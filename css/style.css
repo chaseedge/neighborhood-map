@@ -1,0 +1,175 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 15px;
+    display: flex;
+    width: 100%;
+    z-index: 1;
+}
+
+header img {
+    margin: 0 auto;
+}
+
+#map {
+    height: 100%;
+}
+
+#map-error {
+    height: auto;
+    width: 30%;
+    position: fixed;
+    top: 20%;
+    left: 35%;
+    right: 35%;
+    z-index: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    cursor: pointer;
+}
+
+.error-msg {
+    display: block;
+}
+
+.side-nav-btn {
+    position: fixed;
+    top: 10px;
+    z-index: 1;
+    padding-left: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: black;
+}
+
+#side-nav {
+    height: 100%;
+    width: 0;
+    /*hidden width*/
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+#side-nav.show {
+    width: 300px;
+}
+
+#side-nav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+#side-nav a:hover,
+.offcanvas a:focus {
+    color: #f1f1f1;
+}
+
+#side-nav .close-btn {
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#side-nav .location-list {
+    padding-top: 10px;
+}
+
+#side-nav .nav-pills li {
+    margin: auto 5px;
+}
+
+#side-nav li {
+    cursor: pointer;
+}
+
+
+/* Modal Content */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.modal-header {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+/* The Close Button */
+
+.modal-close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ratings p {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.modal-footer {
+    color: red;
+    text-align: center;
+}
+
+@media screen and (max-height: 450px) {
+    #side-nav {
+        padding-top: 15px;
+    }
+    #side-nav a {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .modal-content {
+        padding: 5px;
+        width: 90%;
+    }
+    
+    .logo {
+        width: 80%;
+    }
+    
+    #map-error {
+        width: 80%;
+        left: 10%;
+        right: 10%;
+    }    
+}
